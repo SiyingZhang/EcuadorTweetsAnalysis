@@ -1,5 +1,6 @@
 package edu.siying.util;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -14,12 +15,15 @@ import org.json.simple.JSONObject;
 public class SqlToJson {
 	
 	private ResultSet resultSet;
-	private static String FILE_PATH = "/Users/siying/Documents/pro/eclipseWorkspace/EcuatorData/data/tweets.json";
+	private static String FILE_PATH = "/Users/siying/Documents/pro/eclipseWorkspace/EcuatorData/WebContent/tweets.json";
 	FileWriter fw = null;
+	File file = null;
 	
 	public SqlToJson(ResultSet rs) throws IOException{
 		resultSet = rs;
-		fw = new FileWriter(FILE_PATH);
+		file = new File(FILE_PATH);
+		
+		fw = new FileWriter(file, false);
 	}
 	
 	public void writeToJson() throws Exception{

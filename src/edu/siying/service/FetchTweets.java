@@ -16,6 +16,7 @@ public class FetchTweets {
 	
 	private static String EARTHQUAKE_TAG = "ecuadorearthquake";
 	private static String ECUADOR_TAG = "ecuador";
+	//private static String START_DATE = "2016-04-27";
 //	private static String URL = "https://api.twitter.com/1.1/search/tweets.json?q=%23";
 //	private static String COUNT = "&count=500";
 
@@ -42,11 +43,10 @@ public class FetchTweets {
 		}
 		
 		//write data into json file
-		/*
 		ResultSet rs = td.selectResultSet();
 		
 		SqlToJson toJson = new SqlToJson(rs);
-		toJson.writeToJson();*/
+		toJson.writeToJson();
 
 	}
 

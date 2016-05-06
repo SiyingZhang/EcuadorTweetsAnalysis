@@ -26,13 +26,34 @@ public class TweetsDao {
 		
 		String location = "";
 		if(tweet.getGeoLocation() == null) {
+			
 			location = tweet.getUser().getLocation();
+			
+			//Only leave the country substring
+			if(location.contains(", ")) {
+				location = location.substring(location.indexOf(",")+2);
+			} else if(location.contains(",")){
+				location = location.substring(location.indexOf(",")+1);
+			}
+			
+			location = location.toUpperCase();	//Convert to Uppercase
+			//country = tweet.getPlace().getCountry();		
 		} else {
 			location = tweet.getGeoLocation().toString();
+			
+			//Only leave the country substring
+			if(location.contains(", ")) {
+				location = location.substring(location.indexOf(",")+2);
+			} else if(location.contains(",")){
+				location = location.substring(location.indexOf(",")+1);
+			}
+			
+			location = location.toUpperCase();	//Convert to Uppercase
+			//country = tweet.getPlace().getCountry();		
 		}
 		
 		try {
-			query = "INSERT INTO ecuadordata.tweets(tweetID, time, location) values(?, ?, ?)";
+			query = "INSERT INTO ecuadordata.tweetswithLocation(tweetID, time, location) values(?, ?, ?)";
 			PreparedStatement ps = connection.prepareStatement(query);
 
 			ps.setLong(1, tweet.getId());
@@ -61,7 +82,7 @@ public class TweetsDao {
 		ResultSet rs = null;
 		
 		try {
-			query = "SELECT * FROM ecuadordata.tweets";
+			query = "SELECT * FROM ecuadordata.tweetswithLocation";
 			PreparedStatement ps = connection.prepareStatement(query);
 			
 			rs = ps.executeQuery();

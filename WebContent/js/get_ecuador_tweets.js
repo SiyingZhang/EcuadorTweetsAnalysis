@@ -1,0 +1,1 @@
+$.getJSON('../tweets.json', )
