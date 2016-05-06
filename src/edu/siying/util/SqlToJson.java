@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.ResultSet;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -29,17 +30,26 @@ public class SqlToJson {
 	public void writeToJson() throws Exception{
 		
 		JSONObject jsonObject = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
 		int count = 0;
 		
 		try {
 			while(resultSet.next()) {
-				jsonObject.put("ID", resultSet.getLong(1));
-				jsonObject.put("CreatedAt", resultSet.getString(2).substring(4, 10));
-				jsonObject.put("Location", resultSet.getString(3));
+				JSONObject object = new JSONObject();
+				object.put("ID", resultSet.getLong(1));
+				object.put("CreatedAt", resultSet.getString(2).substring(4, 10));  //only get mm-dd
+				object.put("Location", resultSet.getString(3));
 				
-				fw.write(jsonObject.toJSONString() + System.getProperty("line.separator"));
+				jsonArray.add(object);
+				
+				//System.out.println(jsonArray.toJSONString());
 				System.out.println("Write successfully " + "====== " + (count++) + " ======");
 			}
+			
+			jsonObject.put("tweets", jsonArray);
+			
+			fw.write(jsonObject.toJSONString());  // + System.getProperty("line.separator")
+			
 		} catch (IOException e) {
 			// TODO: handle exception
 			e.printStackTrace();
