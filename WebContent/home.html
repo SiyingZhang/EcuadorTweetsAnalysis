@@ -13,38 +13,60 @@
 </head>
 <body>
 	<div class="heading">
-		<h3>Data Visualization - Ecuador Earthquake</h3>
-		<h5>Tweets with #ecuador or #ecuadorearthquake (Apr 26 - May 03)</h5>
-	</div>		
+		<h3>Ecuador Earthquake Tweets Visualization</h3>
+		<h5>Tweets with hashtag <a class="a-hashtag" href="https://twitter.com/hashtag/ecuador?src=rela">#ecuador</a> <a class="a-hashtag" href="https://twitter.com/hashtag/ecuadorearthquake?src=rela">#ecuadorearthquake</a></h5>
+	</div>	
 	<div id="fig">
 		<div id="container">
 			<b id="dayLabel">Date: </b>
 			<div id="dateSlider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
 				<a href="#" class="ui-slider-handle ui-state-default ui-corner-all"></a>
 			</div>
-			<img id="play" src="img/play.png" alt="Play" onclick="playClick()">
+			<img id="play" src="images/play.png" alt="Play" onclick="playClick()">
 		</div>
 		<!-- Visualization -->
 		<script type="text/javascript+protovis">
-			
+
+			//parameters
 			var i = 0,
 				w = 810,
 				h = 400,
 				mapMargin = 30;
 
+			//Draw chart
 			var vis = new pv.Panel()
 		  		.width(w)
 		  		.height(h)
 		  		.top(50)
 		  		.bottom(30);
 
+          	//Date definition
+          	var date = new Date('2016-05-05'),
+				maxDate = new Date('2016-05-05'),
+          		minDate = new Date('2016-04-26'),
+          	
+          		formatDate = pv.Format.date("%b %d");
+
+          	//date slider
 			$(dateSlider).slider({
-				min:
-				vis.render()
-			})
+				min: minDate,
+		        max: maxDate,
+		        value: maxDate,
+		        //vis.render();
+
+			});			
+
+			ecuador_tweets.forEach(function(c){
+
+			});
 
 
 
+		  	var legendMargin = 20,
+          	ease = null,
+          	datesMargin = 100;
+
+          	
 		  	var dateScale = pv.Scale.linear()
 		  		.domain(26, 33)
 		  		.range({x: mapMargin, y: mapMargin}, {x: w-mapMargin, y: h-mapMargin});
@@ -57,21 +79,30 @@
 		  		.top(-40)
 		  	  .anchor("bottom").add(pv.Label);
 
+		  	var nodes = [],
+		  		codeToNode = [],
+		  		links = [];
+		  	
+		  	function updateDate() {
+
+		  	}
+		  	//Play & Stop
 		  	var timer = undefined;
 	        function playClick() {
 	          if (timer) {
 	            stop();
 	          } else {
-	            if (date == ecuador_tweets.maxDate) date = ecuador_tweets.minDate;
+	            if (date == maxDate) 
+	            	date = minDate;
 	            $(dateSlider).slider('value', date);
-	            $(play).attr("src", 'img/stop.png');
-	            updateYear();
+	            $(play).attr("src", 'images/stop.png');
+	            updateDate();
 	            vis.render();
 	            timer = setInterval(function() {
-	              year++;
-	              if (year >= us_stats.maxYear) stop();
+	              date.setDate(date.getDate() + 1);	//increase date
+	              if (date >= maxDate) stop();
 	              $(dateSlider).slider('value', year);
-	              updateYear();
+	              updateDate();
 	              vis.render();
 	            }, 900);
 	          }
@@ -81,12 +112,13 @@
 	        function stop() {
 	          clearInterval(timer);
 	          timer = undefined;
-	          $(play).attr("src", 'img/play.png');
+	          $(play).attr("src", 'images/play.png');
 	        }
-
 		</script>	
 	</div>
-
+	<div class="footer-bottom">
+    	<p>Copyright &copy 2016 Developed by Siying Zhang| Reference Sources <a href="http://mbostock.github.io/protovis/">Protovis library</a></p>
+  	</div>
 </body>
 </html>
 

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.util.LinkedList;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -57,6 +58,6 @@ public class SqlToJson {
 			fw.flush();
 			fw.close();
 		}
-		
+	
 	}
 }
